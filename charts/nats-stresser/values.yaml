@@ -1,0 +1,22 @@
+image:
+  repository: nats-stress
+  tag: latest
+  pullPolicy: IfNotPresent
+
+nats:
+  url: nats://nats:4222
+
+configure:
+  replicaCount: 1
+  streams: |
+    {"name": "foo", "subjects": ["foo.>"]}
+
+publisher:
+  replicaCount: 1
+  publishers: |
+    {"subject": "foo.test", "interval": 100, "msg_size": 10000}
+
+consumer:
+  replicaCount: 1
+  consumers: |
+    {"stream":"foo", "subject": "foo.>", "unique_delivery_subject": true}

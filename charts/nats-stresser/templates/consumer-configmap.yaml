@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nats-stream-consumer
+data:
+  consumers: |
+{{ .Values.consumer.consumers | indent 4 }}

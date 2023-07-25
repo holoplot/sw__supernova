@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nats-stream-configure
+spec:
+  replicas: {{ .Values.configure.replicaCount | default 1 }}
+  selector:
+   matchLabels:
+    app: nats-stream-configure
+  template:
+    metadata:
+      labels:
+        app: nats-stream-configure
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+      - name: nats-stream-configure
+        image: {{ .Values.image.repository | default "nats-stress" }}:{{ .Values.image.tag | default "latest" }}
+        imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
+        command: ["/opt/bin/nats-stream-configure"]
+        env:
+        - name: NATS_URL
+          value: {{ .Values.nats.url | default "nats://nats:4222" }}
+        - name: CONFIG_FILE
+          value: "/etc/config/streams.ndjson"
+        volumeMounts:
+        - name: nats-stream-configure
+          mountPath: /etc/config
+      volumes:
+      - name: nats-stream-configure
+        configMap:
+          name: nats-stream-configure
+          items:
+          - key: streams
+            path: streams.ndjson

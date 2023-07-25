@@ -1,0 +1,3 @@
+{"stream":"foo", "subject": "foo.>", "consumer_config": {"deliver_subject": "foo"}}
+{"stream":"foo", "subject": "foo.>", "pull":true, "consumer_config": {}}
+{"stream":"boom", "subject": "boom.>", "consumer_config": {"deliver_subject": "boom", "deliver_policy": "last"}}

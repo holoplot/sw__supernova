@@ -1,0 +1,16 @@
+# This scenario aims to replicate the load on NATS seen in the Sphere project
+
+configure:
+  replicaCount: 1
+  streams: |
+    {"name": "foo", "subjects": ["foo.>"], "max_msgs_per_subject": 1, "discard": "old", "num_replicas": 3, "storage": "file", "max_byte": -1, "max_msgs": -1}
+
+publisher:
+  replicaCount: 1
+  publishers: |
+    {"subject": "foo.bar", "interval": 10000, "msg_size": 1000}
+
+consumer:
+  replicaCount: 2
+  consumers: |
+    {"stream":"foo", "subject": "foo.>", "unique_delivery_subject": true}

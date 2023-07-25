@@ -1,0 +1,2 @@
+{"subject": "foo.test", "interval": 100, "msg_size": 10000}
+{"subject": "boom.test", "interval": 1000, "msg_size": 100000}

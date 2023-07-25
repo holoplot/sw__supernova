@@ -1,0 +1,2 @@
+{"name": "foo", "subjects": ["foo.>"]}
+{"name": "bar", "subjects": ["bar.>"], "storage": "memory", "num_replicas": 3}

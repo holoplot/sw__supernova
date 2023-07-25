@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nats-stream-consumer
+spec:
+  replicas: {{ .Values.consumer.replicaCount | default 1 }}
+  selector:
+   matchLabels:
+    app: nats-stream-consumer
+  template:
+    metadata:
+      labels:
+        app: nats-stream-consumer
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9090"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+      - name: nats-stream-consumer
+        image: {{ .Values.image.repository | default "nats-stress" }}:{{ .Values.image.tag | default "latest" }}
+        imagePullPolicy: {{ .Values.image.pullPolicy | default "IfNotPresent" }}
+        command: ["/opt/bin/nats-stream-consumer"]
+        env:
+        - name: NATS_URL
+          value: {{ .Values.nats.url | default "nats://nats:4222" }}
+        - name: CONFIG_FILE
+          value: "/etc/config/consumers.ndjson"
+        volumeMounts:
+        - name: nats-stream-consumer
+          mountPath: /etc/config
+      volumes:
+      - name: nats-stream-consumer
+        configMap:
+          name: nats-stream-consumer
+          items:
+          - key: consumers
+            path: consumers.ndjson

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nats-stream-publisher
+data:
+  publishers: |
+{{ .Values.publisher.publishers | indent 4 }}
