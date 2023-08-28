@@ -17,6 +17,7 @@ require (
 	github.com/prometheus/procfs v0.10.1 // indirect
 	golang.org/x/crypto v0.6.0 // indirect
 	golang.org/x/sys v0.8.0 // indirect
+	golang.org/x/text v0.7.0 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
 	k8s.io/utils v0.0.0-20230711102312-30195339c3c7 // indirect
 )
