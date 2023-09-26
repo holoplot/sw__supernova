@@ -37,7 +37,7 @@ unique inbox for each consumer allow for multiple instances.
 ## Use for testing
 
 1. Deploy a K8S cluster (kind will be assumed in this documentation, however other such as minikube and k3s will also work)
-2. Deploy a NATS cluster in k3s using the helm chart and a values file from `nats-configs`
+2. Deploy a NATS cluster in k3s using the helm chart and a values file from `nats-configs` e.g. `helm install nats nats/nats --version 1.0.3 -f nats-configs/3-node-cluster-jetstream.yaml`
 3. Deploy a prometheus server using the community helm chart and the values file `prometheus-values.yaml`
 4. Build the docker image `docker build . -f docker/nats-stress/Dockerfile --tag nats-stress:my-image-tag`
 5. Load the image into the cluster or push it somewhere `kind load docker-image nats-stress:my-image-tag`

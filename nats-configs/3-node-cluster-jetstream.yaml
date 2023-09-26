@@ -1,33 +1,25 @@
-cluster:
-  enabled: true
-  replicas: 3
-exporter:
-  image:
-    registry: docker.io
-nats:
+config:
+  cluster:
+    enabled: true
+    replicas: 3
+    merge:
+      no_advertise: true
 
-  advertise: false
-
-  image:
-    registry: docker.io
   jetstream:
     enabled: true
     fileStorage:
       enabled: true
-      size: 1Gi
-      storageDirectory: /data/
+      dir: /data
+      pvc:
+        enabled: true
+        size: 1Gi
     memStorage:
       enabled: true
-      size: 10Gi
-  limits:
-    maxPayload: 64MB
-natsbox:
-  image:
-    registry: docker.io
-reloader:
-  image:
-    registry: docker.io
-websocket:
-  enabled: true
-  noTLS: true
-  port: 80
+      maxSize: 10Gi
+
+  merge:
+    max_payload: 64000000
+
+  websocket:
+    enabled: true
+    port: 80
